@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# gm-identify-item: print one item of information about an image file
+#
+# GraphicsMagick can print a bunch of information about an image file,
+# by using the command "gm identify" and the option "-verbose" such as:
+#
+#     gm identify -verbose file.jpg
+#
+# This script filters the output in order to print just one item.
+#
+# Example to print the image geometry a.k.a. pixel size:
+#
+#     gm-identify-item geometry file.jpg
+#
+# Example to print the JPEG quality setting:
+#
+#     gm-identify-item jpeg-quality file.jpg
+#
+# Example to print the date and time of the original:
+#
+#     gm-identify-item date-time-original file.jpg
+#
+
+item=${1//-/.}; shift;
+gm identify -verbose "$@" | sed -n "s/^ *$item: //ip"
